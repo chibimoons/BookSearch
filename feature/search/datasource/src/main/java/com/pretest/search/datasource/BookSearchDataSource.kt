@@ -11,9 +11,10 @@ class BookSearchDataSource(
     private val httpClient: HttpClient
 ) : IBookSearchDataSource {
 
+    var maxSizePerPage: Int? = null
     var keyword: String = ""
     var currentPage: Int = 0
-    var
+
 
     override suspend fun search(keyword: String): List<Book> {
         this.keyword = keyword
