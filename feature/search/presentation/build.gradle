@@ -4,8 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation project(":feature:search:domain")
     implementation project(":common:mvi")
+
+    implementation project(":feature:search:domain")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

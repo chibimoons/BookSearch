@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -10,18 +11,31 @@ android {
         versionName "1.0"
     }
 
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 
 dependencies {
 
+    implementation project(":common:mvi")
+    
+    implementation project(":feature:search:presentation")
+    implementation project(":feature:search:renderer")
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${dagger_version}"
+    implementation "com.google.dagger:dagger-android:${dagger_version}"
+    implementation "com.google.dagger:dagger-android-support:${dagger_version}"
+
+    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
+    kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "com.google.android.material:material:$android_material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
+
+
 }

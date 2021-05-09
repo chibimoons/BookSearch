@@ -2,7 +2,7 @@ package com.pretest.search.presentation.list.viewstate
 
 import com.pretest.search.domain.entity.Book
 
-enum class BookSearchViewStateType {
+enum class BookSearchListViewStateType {
     INITIAL,
     CHANGED_KEYWORD,
     STARTED_SEARCHING,
@@ -12,8 +12,8 @@ enum class BookSearchViewStateType {
     UNKNOWN
 }
 
-data class BookSearchViewState(
-    val stateType: BookSearchViewStateType = BookSearchViewStateType.INITIAL,
+data class BookSearchListViewState(
+    val stateType: BookSearchListViewStateType = BookSearchListViewStateType.INITIAL,
     val keyword: String = "",
     val books: List<Book> = emptyList(),
     val isShowProgressBar: Boolean = false,

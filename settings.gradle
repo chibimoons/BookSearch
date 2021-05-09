@@ -1,11 +1,12 @@
 include ':common:mvi'
 include ':common:network'
-include ':feature:search:main'
-include ':feature:search:renderer'
+
+include ':feature:search:domain'
+include ':feature:search:repository'
 include ':feature:search:datasource'
 include ':feature:search:presentation'
-include ':feature:search:repository'
-include ':feature:search:domain'
+include ':feature:search:renderer'
+include ':feature:search:main'
 
 include ':app'
 
