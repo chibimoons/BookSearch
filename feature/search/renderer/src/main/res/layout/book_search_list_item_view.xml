@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="54dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="@dimen/book_search_item_horizontal_padding"
+        android:layout_marginTop="12dp"
+        android:background="#12345678"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/book_search_item_horizontal_padding"
+        android:src="@drawable/ico_star_off"
+        app:layout_constraintBottom_toBottomOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:singleLine="true"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toStartOf="@id/favorite"
+        app:layout_constraintStart_toEndOf="@+id/thumbnail"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="밀리의 서재 " />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="@dimen/book_search_item_horizontal_padding"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:singleLine="true"
+        android:textSize="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="이책은 밀리에 대한 이야기를 담고 있는 아주 흥미 진지한 .........." />
+
+    <TextView
+        android:id="@+id/publishDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="12dp"
+        app:layout_constraintStart_toEndOf="@+id/thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        tools:text="2021.05.21" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="@dimen/book_search_item_horizontal_padding"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:gravity="end"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/publishDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/publishDate"
+        tools:text="18,000원" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

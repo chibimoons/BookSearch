@@ -38,7 +38,8 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
     private fun reduceFinishSearchingIntent(state: BookSearchListViewState, intent: FinishSearching) =
         state.copy(
             stateType = BookSearchListViewStateType.FINISHED_SEARCHING,
-            books = state.books + intent.books
+            books = state.books + intent.books,
+            isShowProgressBar = false
         )
 
     private fun reduceChangeBookStateIntent(state: BookSearchListViewState, intent: ChangeBookState) =
@@ -55,6 +56,7 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
     private fun reduceOccurErrorIntent(state: BookSearchListViewState, intent: OccurError) =
         state.copy(
             stateType = BookSearchListViewStateType.ERROR,
+            isShowProgressBar = false,
             throwable = intent.throwable
         )
 

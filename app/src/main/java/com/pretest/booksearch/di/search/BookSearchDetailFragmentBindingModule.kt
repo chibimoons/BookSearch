@@ -1,16 +1,16 @@
 package com.pretest.booksearch.di.search
 
 import com.pretest.booksearch.di.FragmentScope
-import com.pretest.search.BookSearchListFragment
+import com.pretest.search.BookSearchDetailFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class BookSearchListFragmentBindingModule {
+abstract class BookSearchDetailFragmentBindingModule {
 
     @FragmentScope
     @ContributesAndroidInjector(modules = [
-        BookSearchListModule::class
+        BookSearchDetailModule::class
     ])
-    abstract fun bindBookSearchListFragment(): BookSearchListFragment
+    abstract fun bindBookSearchDetailFragment(): BookSearchDetailFragment
 }

@@ -9,4 +9,5 @@ dependencies {
     implementation project(":feature:search:domain")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$ktor_coroutine_version"
 }

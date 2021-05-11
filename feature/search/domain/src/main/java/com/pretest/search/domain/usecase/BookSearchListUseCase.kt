@@ -2,7 +2,10 @@ package com.pretest.search.domain.usecase
 
 import com.pretest.search.domain.entity.Book
 
-class BookSearchUseCase(val bookSearchRepository: IBookSearchRepository) {
+class BookSearchListUseCase(
+    val bookSearchRepository: IBookSearchRepository,
+    val bookSearchListRouter: BookSearchListRouter
+) {
 
     companion object {
         private const val MAX_SIZE_PER_PAGE: Int = 50
@@ -23,5 +26,9 @@ class BookSearchUseCase(val bookSearchRepository: IBookSearchRepository) {
 
     suspend fun searchMore(): List<Book> {
         return listOf()
+    }
+
+    suspend fun goDetailPage(book: Book) {
+        bookSearchListRouter.goBookSearchDetail(book)
     }
 }

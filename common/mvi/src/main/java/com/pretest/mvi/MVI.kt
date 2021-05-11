@@ -11,19 +11,19 @@ import kotlinx.coroutines.launch
 class MVI<VIEW_STATE, INTENT>(
     var initialViewState: VIEW_STATE,
     val middleware: List<Middleware<VIEW_STATE, INTENT>>,
-    val reducer: Reducer<VIEW_STATE, INTENT>,
-    val view: View<VIEW_STATE>? = null
+    val reducer: Reducer<VIEW_STATE, INTENT>
 ): Dispatcher<INTENT> {
 
     private val intentChannel: Channel<INTENT> = Channel()
     private val viewStateChannel: Channel<VIEW_STATE> = Channel()
+    var renderable: Renderable<VIEW_STATE>? = null
 
     fun start() {
         launchRedux(initialViewState)
     }
 
     private fun launchRedux(viewState: VIEW_STATE) {
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             var currentViewState = viewState
             intentChannel.receiveAsFlow()
                 .flatMapConcat { applyMiddleware(0, currentViewState, it) }
@@ -33,7 +33,7 @@ class MVI<VIEW_STATE, INTENT>(
                     currentViewState = it
                     notify(it)
                 }
-                .collect { view?.render(it) }
+                .collect { renderable?.render(it) }
         }
     }
 

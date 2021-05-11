@@ -12,6 +12,6 @@ enum class BookSearchDetailViewStateType {
 
 data class BookSearchDetailViewState(
     val stateType: BookSearchDetailViewStateType = BookSearchDetailViewStateType.INITIAL,
-    val book: Book,
+    val book: Book? = null,
     val throwable: Throwable? = null
 )
