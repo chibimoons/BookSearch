@@ -1,0 +1,13 @@
+include ':common:mvi'
+include ':common:network'
+
+include ':feature:search:domain'
+include ':feature:search:repository'
+include ':feature:search:datasource'
+include ':feature:search:presentation'
+include ':feature:search:renderer'
+include ':feature:search:main'
+
+include ':app'
+
+rootProject.name = "BookSearch"

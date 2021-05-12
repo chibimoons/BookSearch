@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.8">
+      <module name="BookSearch.app" target="11" />
+      <module name="BookSearch.common.network" target="11" />
+      <module name="BookSearch.feature.search.datasource" target="11" />
+      <module name="BookSearch.feature.search.domain" target="11" />
+      <module name="BookSearch.feature.search.main" target="11" />
+      <module name="BookSearch.feature.search.presentation" target="11" />
+      <module name="BookSearch.feature.search.renderer" target="11" />
+      <module name="BookSearch.feature.search.repository" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
