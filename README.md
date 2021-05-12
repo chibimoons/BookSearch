@@ -1,5 +1,9 @@
 # BookSearch
 
+## 프로젝트 구조
+
+<img src="https://user-images.githubusercontent.com/22926201/117979178-9bb3ef80-b36d-11eb-8235-b5f59a036773.png" width=300 />
+
 ## 실행화면
 
 [검색 목록]
