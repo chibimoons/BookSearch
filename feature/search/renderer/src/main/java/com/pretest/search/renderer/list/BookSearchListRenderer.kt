@@ -17,6 +17,7 @@ import com.pretest.search.presentation.list.intent.SearchMore
 import com.pretest.search.presentation.list.viewstate.BookSearchListViewState
 import com.pretest.search.presentation.list.viewstate.BookSearchListViewStateType
 import com.pretest.search.renderer.databinding.BookSearchListViewBinding
+import com.pretest.search.renderer.utils.KeyboardUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -79,7 +80,7 @@ class BookSearchListRenderer(
     private fun initRecyclerView() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
-            LinearLayoutManager(binding.root.context, RecyclerView.VERTICAL, false)
+            LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false)
         binding.recyclerView.onScrollBottomListener = { dispatcher.dispatch(SearchMore()) }
     }
 
@@ -93,6 +94,7 @@ class BookSearchListRenderer(
             BookSearchListViewStateType.STARTED_SEARCHING -> renderStartedSearchingState()
             BookSearchListViewStateType.FINISHED_SEARCHING -> renderFinishedSearchingState(viewState)
             BookSearchListViewStateType.CHANGED_BOOK_STATE -> renderChangedBookState(viewState)
+            BookSearchListViewStateType.MOVED_BOOK_DETAIL_PAGE -> renderMovedBookDetailPage()
             BookSearchListViewStateType.ERROR -> renderErrorState(viewState)
             else -> {}
         }
@@ -130,9 +132,15 @@ class BookSearchListRenderer(
         binding.errorMessage.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    private fun renderMovedBookDetailPage() {
+        KeyboardUtils.hideKeyboard(getContext(), binding.searchEditText)
+    }
+
     private fun updateErrorMessage(throwable: Throwable?) {
         binding.errorMessage.text = throwable?.message
-        Toast.makeText(binding.root.context, throwable?.message?: "", Toast.LENGTH_SHORT).show()
+        Toast.makeText(getContext(), throwable?.message?: "", Toast.LENGTH_SHORT).show()
         throwable?.printStackTrace()
     }
+
+    private fun getContext() = binding.root.context
 }
