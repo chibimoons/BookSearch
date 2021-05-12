@@ -3,6 +3,7 @@ package com.pretest.search.renderer.list
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pretest.mvi.Dispatcher
@@ -12,6 +13,7 @@ import com.pretest.search.domain.entity.BookChangedEvent
 import com.pretest.search.presentation.list.intent.BookSearchListIntent
 import com.pretest.search.presentation.list.intent.ChangeBookState
 import com.pretest.search.presentation.list.intent.KeywordChanged
+import com.pretest.search.presentation.list.intent.SearchMore
 import com.pretest.search.presentation.list.viewstate.BookSearchListViewState
 import com.pretest.search.presentation.list.viewstate.BookSearchListViewStateType
 import com.pretest.search.renderer.databinding.BookSearchListViewBinding
@@ -56,7 +58,7 @@ class BookSearchListRenderer(
             text = newText
 
             CoroutineScope(Dispatchers.Main).launch {
-                delay(300)  //debounce timeOut
+                delay(500)  //debounce timeOut
                 if (newText != text)
                     return@launch
 
@@ -78,6 +80,7 @@ class BookSearchListRenderer(
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager =
             LinearLayoutManager(binding.root.context, RecyclerView.VERTICAL, false)
+        binding.recyclerView.onScrollBottomListener = { dispatcher.dispatch(SearchMore()) }
     }
 
     fun getView(): View {
@@ -91,6 +94,7 @@ class BookSearchListRenderer(
             BookSearchListViewStateType.FINISHED_SEARCHING -> renderFinishedSearchingState(viewState)
             BookSearchListViewStateType.CHANGED_BOOK_STATE -> renderChangedBookState(viewState)
             BookSearchListViewStateType.ERROR -> renderErrorState(viewState)
+            else -> {}
         }
     }
 
@@ -128,5 +132,7 @@ class BookSearchListRenderer(
 
     private fun updateErrorMessage(throwable: Throwable?) {
         binding.errorMessage.text = throwable?.message
+        Toast.makeText(binding.root.context, throwable?.message?: "", Toast.LENGTH_SHORT).show()
+        throwable?.printStackTrace()
     }
 }

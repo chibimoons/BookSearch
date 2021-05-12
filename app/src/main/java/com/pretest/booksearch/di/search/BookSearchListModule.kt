@@ -37,7 +37,9 @@ class BookSearchListModule {
     @FragmentScope
     @Provides
     fun provideBookSearchDataSource(httpClient: HttpClient): IBookSearchDataSource {
-        return BookSearchDataSource(httpClient)
+        return BookSearchDataSource(httpClient).apply {
+            this.maxSizePerPage = BookSearchListUseCase.MAX_SIZE_PER_PAGE
+        }
     }
 
     @FragmentScope

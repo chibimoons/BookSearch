@@ -15,3 +15,5 @@ data class OccurError(val throwable: Throwable): BookSearchListIntent
 data class ClickBook(val book: Book): BookSearchListIntent
 
 data class ChangeBookState(val book: Book): BookSearchListIntent
+
+class SearchMore(): BookSearchListIntent

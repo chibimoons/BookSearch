@@ -26,7 +26,8 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
         intent: KeywordChanged
     ) = state.copy(
         stateType = BookSearchListViewStateType.CHANGED_KEYWORD,
-        keyword = intent.keyword
+        keyword = intent.keyword,
+        books = emptyList()
     )
 
     private fun reduceStartSearchingIntent(state: BookSearchListViewState) =
