@@ -19,7 +19,7 @@ class BookSearchListFragment: DaggerFragment() {
     @Inject
     lateinit var renderer: BookSearchListRenderer
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return renderer.getView()
     }
 

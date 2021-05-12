@@ -1,11 +1,8 @@
 package com.pretest.mvi
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 @FlowPreview
 class MVI<VIEW_STATE, INTENT>(
@@ -16,10 +13,10 @@ class MVI<VIEW_STATE, INTENT>(
 
     private val intentChannel: Channel<INTENT> = Channel()
     private val viewStateChannel: Channel<VIEW_STATE> = Channel()
-    var renderable: Renderable<VIEW_STATE>? = null
+    var renderer: Renderable<VIEW_STATE>? = null
 
     fun start() {
-        renderable?.render(initialViewState)
+        renderer?.render(initialViewState)
         launchRedux(initialViewState)
     }
 
@@ -35,7 +32,7 @@ class MVI<VIEW_STATE, INTENT>(
                     currentViewState = it
                     notify(it)
                 }
-                .collect { renderable?.render(it) }
+                .collect { renderer?.render(it) }
         }
     }
 
@@ -58,6 +55,9 @@ class MVI<VIEW_STATE, INTENT>(
     }
 
     override fun dispatch(intent: INTENT) {
+        if (intentChannel.isClosedForSend) {
+            return
+        }
         CoroutineScope(Dispatchers.Default).launch {
             intentChannel.send(intent)
         }

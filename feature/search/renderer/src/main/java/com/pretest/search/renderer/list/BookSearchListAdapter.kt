@@ -9,7 +9,7 @@ import com.pretest.search.presentation.list.intent.BookSearchListIntent
 import com.pretest.search.renderer.databinding.BookSearchListItemViewBinding
 
 class BookSearchListAdapter(
-    val eventListener: (event: BookSearchListIntent) -> Unit?
+    private val eventListener: (event: BookSearchListIntent) -> Unit?
 ): ListAdapter<Book, BookItemViewHolder>(
     getBookSearchListAdapterDiffUtilItemCallback()
 ) {
@@ -24,11 +24,11 @@ class BookSearchListAdapter(
 
 private fun getBookSearchListAdapterDiffUtilItemCallback() = object : DiffUtil.ItemCallback<Book>() {
     override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
-        return oldItem.id.equals(newItem.id)
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
-        return oldItem.equals(newItem)
+        return oldItem == newItem
     }
 
 }

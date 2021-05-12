@@ -1,5 +1,6 @@
 package com.pretest.booksearch
 
+import android.content.res.Configuration
 import android.os.Bundle
 import com.pretest.booksearch.databinding.ActivityMainBinding
 import com.pretest.search.BookSearchListFragment
@@ -16,5 +17,10 @@ class MainActivity : DaggerAppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragmentContainerView, BookSearchListFragment())
         transaction.commit()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Nothing to do.
     }
 }

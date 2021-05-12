@@ -25,11 +25,8 @@ class BookSearchDetailUseCase(
         return updatedBook
     }
 
-    suspend fun unlikeBook(book: Book): Book {
-        return updateLike(book, false)
-    }
+    suspend fun unlikeBook(book: Book): Book = updateLike(book, false)
 
-    suspend fun goBack() {
-        bookSearchDetailRouter.goBack()
-    }
+    suspend fun goBack() = bookSearchDetailRouter.goBack()
+    
 }

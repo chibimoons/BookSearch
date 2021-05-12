@@ -38,7 +38,7 @@ class BookSearchListModule {
     @Provides
     fun provideBookSearchDataSource(httpClient: HttpClient): IBookSearchDataSource {
         return BookSearchDataSource(httpClient).apply {
-            this.maxSizePerPage = BookSearchListUseCase.MAX_SIZE_PER_PAGE
+            this.maxSizePerPage = 10
         }
     }
 
@@ -105,7 +105,7 @@ class BookSearchListModule {
     @Provides
     fun provideBookSearchListView(fragment: BookSearchListFragment, mvi: MVI<BookSearchListViewState, BookSearchListIntent>, bookChangedEventChannel: Channel<BookChangedEvent>): BookSearchListRenderer {
         val renderer = BookSearchListRenderer(BookSearchListViewBinding.inflate(LayoutInflater.from(fragment.context)), mvi, bookChangedEventChannel)
-        mvi.renderable = renderer
+        mvi.renderer = renderer
         return renderer
     }
 }
