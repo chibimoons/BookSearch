@@ -38,7 +38,7 @@ class BookSearchListModule {
     @Provides
     fun provideBookSearchDataSource(httpClient: HttpClient): IBookSearchDataSource {
         return BookSearchDataSource(httpClient).apply {
-            this.maxSizePerPage = 10
+            this.maxSizePerPage = BookSearchListUseCase.MAX_SIZE_PER_PAGE
         }
     }
 
