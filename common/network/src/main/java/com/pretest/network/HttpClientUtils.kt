@@ -1,13 +1,17 @@
 package com.pretest.network
 
 import io.ktor.client.*
+import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
 
-// Todo: 커스텀 로거 주입 받을 수 있게
-
 fun buildHttpClient() = HttpClient() {
+    install(HttpTimeout)
+    {
+        requestTimeoutMillis = 3000
+        connectTimeoutMillis = 3000
+    }
     install(JsonFeature) {
         serializer = GsonSerializer() {
             setPrettyPrinting()

@@ -12,19 +12,35 @@ class BookSearchDataSource(
 ) : IBookSearchDataSource {
 
     var maxSizePerPage: Int? = null
-    var keyword: String = ""
-    var currentPage: Int = 0
-
+    private var keyword: String = ""
+    private var currentPage: Int = 1
+    private var isEnd: Boolean = false
 
     override suspend fun search(keyword: String): List<Book> {
         this.keyword = keyword
-        var response: BookSearchResponse? = httpClient.get<BookSearchResponse> {
+        this.currentPage = 1
+        this.isEnd = false
+        return requestSearchApi(currentPage)
+    }
+
+    private suspend fun requestSearchApi(page: Int): List<Book> {
+        val response: BookSearchResponse = httpClient.get {
             headers.append("Authorization", "KakaoAK 034579f787e6c8a61801506702ac6002")
-            url("https://dapi.kakao.com/v3/search/book?target=title")
+            url("https://dapi.kakao.com/v3/search/book")
+            parameter("target", "title")
             parameter("query", keyword)
+            parameter("size", maxSizePerPage)
+            parameter("page", page)
         }
-        return response?.documents
-            ?.map { document ->
+
+        currentPage = page + 1
+        isEnd = response.metaData.isEnd
+        return mapToBooks(response)
+    }
+
+    private fun mapToBooks(response: BookSearchResponse) =
+        response.documents
+            .map { document ->
                 Book(
                     id = document.isbn,
                     title = document.title,
@@ -32,13 +48,16 @@ class BookSearchDataSource(
                     imageUrl = document.thumbnail,
                     price = document.price,
                     publishDate = document.datetime,
+                    publisher = document.publisher,
                     authors = document.authors.map { authorName -> Author(authorName) }.toList()
                 )
-            }?.toList()
-            ?: emptyList()
-    }
+            }.toList()
 
     override suspend fun searchMore(): List<Book> {
-        TODO("Not yet implemented")
+        return if (isEnd) {
+            emptyList()
+        } else {
+            requestSearchApi(currentPage)
+        }
     }
 }

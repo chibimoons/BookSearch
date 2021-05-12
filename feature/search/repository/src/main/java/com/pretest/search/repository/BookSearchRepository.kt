@@ -6,11 +6,9 @@ import com.pretest.search.domain.usecase.IBookSearchRepository
 class BookSearchRepository(
     val bookSearchDataSource:IBookSearchDataSource
 ): IBookSearchRepository {
-    override suspend fun search(keyword: String): List<Book> {
-        return bookSearchDataSource.search(keyword)
-    }
 
-    override suspend fun searchMore(): List<Book> {
-        return bookSearchDataSource.searchMore()
-    }
+    override suspend fun search(keyword: String): List<Book> = bookSearchDataSource.search(keyword)
+
+    override suspend fun searchMore(): List<Book> = bookSearchDataSource.searchMore()
+
 }

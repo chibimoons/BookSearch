@@ -26,7 +26,8 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
         intent: KeywordChanged
     ) = state.copy(
         stateType = BookSearchListViewStateType.CHANGED_KEYWORD,
-        keyword = intent.keyword
+        keyword = intent.keyword,
+        books = emptyList()
     )
 
     private fun reduceStartSearchingIntent(state: BookSearchListViewState) =
@@ -38,26 +39,32 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
     private fun reduceFinishSearchingIntent(state: BookSearchListViewState, intent: FinishSearching) =
         state.copy(
             stateType = BookSearchListViewStateType.FINISHED_SEARCHING,
-            books = state.books + intent.books
+            books = state.books + intent.books,
+            isShowProgressBar = false
         )
 
     private fun reduceChangeBookStateIntent(state: BookSearchListViewState, intent: ChangeBookState) =
         state.copy(
             stateType = BookSearchListViewStateType.CHANGED_BOOK_STATE,
             books = state.books.map { book ->
-                if (book.id.equals(intent.book.id)) {
+                if (book.id == intent.book.id) {
                     intent.book
+                } else {
+                    book
                 }
-                book
             }
         )
 
     private fun reduceOccurErrorIntent(state: BookSearchListViewState, intent: OccurError) =
         state.copy(
             stateType = BookSearchListViewStateType.ERROR,
+            isShowProgressBar = false,
             throwable = intent.throwable
         )
 
     private fun reduceUnknownIntent(state: BookSearchListViewState) =
-        state.copy(stateType = BookSearchListViewStateType.UNKNOWN)
+        state.copy(
+            stateType = BookSearchListViewStateType.UNKNOWN,
+            isShowProgressBar = false
+        )
 }

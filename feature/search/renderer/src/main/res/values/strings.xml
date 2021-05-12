@@ -1,0 +1,7 @@
+<resources>
+    <string name="book_search_hint">Please enter the book name</string>
+    <string name="error_message">An error has occurred!</string>
+    <string name="book_price_format">%1swon</string>
+
+    <string name="favorite">favorite</string>
+</resources>

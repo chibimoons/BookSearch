@@ -4,8 +4,8 @@ import com.pretest.search.domain.entity.Book
 
 enum class BookSearchDetailViewStateType {
     INITIAL,
-    LIKE,
-    UNLIKE,
+    LIKED,
+    UNLIKED,
     ERROR,
     UNKNOWN
 }

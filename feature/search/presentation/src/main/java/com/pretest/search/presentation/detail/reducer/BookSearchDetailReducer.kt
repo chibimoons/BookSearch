@@ -1,31 +1,28 @@
 package com.pretest.search.presentation.detail.reducer
 
 import com.pretest.mvi.Reducer
-import com.pretest.search.presentation.detail.intent.BookSearchDetailIntent
-import com.pretest.search.presentation.detail.intent.ClickLike
-import com.pretest.search.presentation.detail.intent.ClickUnlike
-import com.pretest.search.presentation.detail.intent.OccurError
+import com.pretest.search.presentation.detail.intent.*
 import com.pretest.search.presentation.detail.viewstate.BookSearchDetailViewState
 import com.pretest.search.presentation.detail.viewstate.BookSearchDetailViewStateType
 
 class BookSearchDetailReducer: Reducer<BookSearchDetailViewState, BookSearchDetailIntent> {
     override fun reduce(state: BookSearchDetailViewState, intent: BookSearchDetailIntent): BookSearchDetailViewState {
         return when(intent) {
-            is ClickLike -> reduceClickLikeIntent(state, intent)
-            is ClickUnlike -> reduceClickUnlikeIntent(state, intent)
+            is LikedBook -> reduceLikedBook(state, intent)
+            is UnlikedBook -> reduceUnlikedBook(state, intent)
             else -> reduceUnknownIntent(state)
         }
     }
 
-    private fun reduceClickLikeIntent(state: BookSearchDetailViewState, intent: ClickLike) =
+    private fun reduceLikedBook(state: BookSearchDetailViewState, intent: LikedBook) =
         state.copy(
-            stateType = BookSearchDetailViewStateType.LIKE,
+            stateType = BookSearchDetailViewStateType.LIKED,
             book = intent.book
         )
 
-    private fun reduceClickUnlikeIntent(state: BookSearchDetailViewState, intent: ClickUnlike) =
+    private fun reduceUnlikedBook(state: BookSearchDetailViewState, intent: UnlikedBook) =
         state.copy(
-            stateType = BookSearchDetailViewStateType.UNLIKE,
+            stateType = BookSearchDetailViewStateType.UNLIKED,
             book = intent.book
         )
 
