@@ -4,6 +4,10 @@
 
 <img src="https://user-images.githubusercontent.com/22926201/117979178-9bb3ef80-b36d-11eb-8235-b5f59a036773.png" width=300 />
 
+## 적용 기술
+
+Clea architecture, MVI, Dagger, Kotlin, Coroutine
+
 ## 실행화면
 
 [검색 목록]
