@@ -30,6 +30,7 @@ class BookSearchListMiddleware(
             .map { books -> FinishSearching(books = books) as BookSearchListIntent }
             .onStart { emit(StartSearching()) }
             .onStart { emit(intent) }
+            .onCompletion {  }
             .catch { throwable -> emit(OccurError(throwable)) }
     }
 

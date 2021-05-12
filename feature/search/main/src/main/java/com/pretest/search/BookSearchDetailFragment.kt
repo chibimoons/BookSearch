@@ -12,7 +12,7 @@ import javax.inject.Inject
 class BookSearchDetailFragment: DaggerFragment() {
 
     companion object {
-        val EXTRA_BOOK_SEARCH_DETAIL_BOOK_PARAMETER_KEY: String = "extra_book_search_detail_book_parameter_key"
+        const val EXTRA_BOOK_SEARCH_DETAIL_BOOK_PARAMETER_KEY: String = "extra_book_search_detail_book_parameter_key"
     }
 
     @Inject
@@ -21,11 +21,7 @@ class BookSearchDetailFragment: DaggerFragment() {
     @Inject
     lateinit var renderer: BookSearchDetailRenderer
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return renderer.getView()
     }
 

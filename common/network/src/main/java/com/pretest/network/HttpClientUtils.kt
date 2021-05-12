@@ -6,14 +6,14 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
 
-fun buildHttpClient() = HttpClient() {
+fun buildHttpClient() = HttpClient {
     install(HttpTimeout)
     {
         requestTimeoutMillis = 3000
         connectTimeoutMillis = 3000
     }
     install(JsonFeature) {
-        serializer = GsonSerializer() {
+        serializer = GsonSerializer {
             setPrettyPrinting()
             disableHtmlEscaping()
         }

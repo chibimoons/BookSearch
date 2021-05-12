@@ -17,6 +17,7 @@ import com.pretest.search.renderer.databinding.BookSearchDetailViewBinding
 import com.pretest.search.renderer.detail.BookSearchDetailRenderer
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
 
 @Module
@@ -50,6 +51,7 @@ class BookSearchDetailModule {
         return BookSearchDetailReducer()
     }
 
+    @FlowPreview
     @FragmentScope
     @Provides
     fun provideMVI(fragment: BookSearchDetailFragment, middleware: MutableList<Middleware<BookSearchDetailViewState, BookSearchDetailIntent>>, reducer: BookSearchDetailReducer): MVI<BookSearchDetailViewState, BookSearchDetailIntent> {
@@ -61,11 +63,12 @@ class BookSearchDetailModule {
         )
     }
 
+    @FlowPreview
     @FragmentScope
     @Provides
     fun provideBookSearchDetailView(fragment: BookSearchDetailFragment, mvi: MVI<BookSearchDetailViewState, BookSearchDetailIntent>): BookSearchDetailRenderer {
         val renderer = BookSearchDetailRenderer(BookSearchDetailViewBinding.inflate(LayoutInflater.from(fragment.context)), mvi)
-        mvi.renderable = renderer
+        mvi.renderer = renderer
         return renderer
     }
 }
