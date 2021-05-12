@@ -16,6 +16,7 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
             is StartSearching -> reduceStartSearchingIntent(state)
             is FinishSearching -> reduceFinishSearchingIntent(state, intent)
             is ChangeBookState -> reduceChangeBookStateIntent(state, intent)
+            is ClickBook -> reduceClickBook(state)
             is OccurError -> reduceOccurErrorIntent(state, intent)
             else -> reduceUnknownIntent(state)
         }
@@ -53,6 +54,12 @@ class BookSearchListReducer : Reducer<BookSearchListViewState, BookSearchListInt
                     book
                 }
             }
+        )
+
+    private fun reduceClickBook(state: BookSearchListViewState) =
+        state.copy(
+            stateType = BookSearchListViewStateType.MOVED_BOOK_DETAIL_PAGE,
+            isShowProgressBar = false
         )
 
     private fun reduceOccurErrorIntent(state: BookSearchListViewState, intent: OccurError) =

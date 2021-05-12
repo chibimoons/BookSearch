@@ -57,6 +57,7 @@ class BookSearchListModule {
                 val fragment = BookSearchDetailFragment()
                 fragment.arguments = bundle
                 bookSearchListFragment.activity?.supportFragmentManager?.beginTransaction()?.let {
+                    it.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     it.add(R.id.fragmentContainerView, fragment)
                     it.addToBackStack(null)
                     it.commit()

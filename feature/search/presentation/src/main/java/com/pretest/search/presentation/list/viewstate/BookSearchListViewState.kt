@@ -8,6 +8,7 @@ enum class BookSearchListViewStateType {
     STARTED_SEARCHING,
     FINISHED_SEARCHING,
     CHANGED_BOOK_STATE,
+    MOVED_BOOK_DETAIL_PAGE,
     ERROR,
     UNKNOWN
 }

@@ -52,6 +52,6 @@ class BookSearchListMiddleware(
     private suspend fun clickBook(intent: ClickBook): Flow<BookSearchListIntent> {
         return flowOf { bookSearchListUseCase.goDetailPage(intent.book) }
             .flowOn(Dispatchers.Main)
-            .flatMapConcat { skip() }
+            .flatMapConcat { next(intent) }
     }
 }
