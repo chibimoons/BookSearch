@@ -1,15 +1,17 @@
 package com.pretest.booksearch.di.search
 
+import android.os.Bundle
 import android.view.LayoutInflater
-import com.pretest.booksearch.MainActivity
 import com.pretest.booksearch.R
 import com.pretest.booksearch.di.FragmentScope
 import com.pretest.booksearch.di.network.NetworkModule
 import com.pretest.mvi.MVI
 import com.pretest.mvi.Middleware
 import com.pretest.search.BookSearchDetailFragment
+import com.pretest.search.BookSearchListFragment
 import com.pretest.search.datasource.BookSearchDataSource
 import com.pretest.search.domain.entity.Book
+import com.pretest.search.domain.entity.BookChangedEvent
 import com.pretest.search.domain.usecase.BookSearchListRouter
 import com.pretest.search.domain.usecase.BookSearchListUseCase
 import com.pretest.search.domain.usecase.IBookSearchRepository
@@ -24,6 +26,8 @@ import com.pretest.search.repository.IBookSearchDataSource
 import dagger.Module
 import dagger.Provides
 import io.ktor.client.*
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.Channel
 
 @Module(includes = [
     NetworkModule::class
@@ -32,7 +36,7 @@ class BookSearchListModule {
 
     @FragmentScope
     @Provides
-    fun provideBookSearcDataSource(httpClient: HttpClient): IBookSearchDataSource {
+    fun provideBookSearchDataSource(httpClient: HttpClient): IBookSearchDataSource {
         return BookSearchDataSource(httpClient)
     }
 
@@ -44,16 +48,25 @@ class BookSearchListModule {
 
     @FragmentScope
     @Provides
-    fun provideBookSearchListRouter(activity: MainActivity): BookSearchListRouter {
+    fun provideBookSearchListRouter(bookSearchListFragment: BookSearchListFragment): BookSearchListRouter {
         return object : BookSearchListRouter {
             override suspend fun goBookSearchDetail(book: Book) {
-                activity.supportFragmentManager.beginTransaction().let {
-                    it.add(R.id.fragmentContainerView, BookSearchDetailFragment())
+                val bundle: Bundle = generateBookSearchDetailParameter(book)
+                val fragment = BookSearchDetailFragment()
+                fragment.arguments = bundle
+                bookSearchListFragment.activity?.supportFragmentManager?.beginTransaction()?.let {
+                    it.add(R.id.fragmentContainerView, fragment)
                     it.addToBackStack(null)
                     it.commit()
                 }
             }
         }
+    }
+
+    private fun generateBookSearchDetailParameter(book: Book): Bundle {
+        val bundle = Bundle()
+        bundle.putSerializable(BookSearchDetailFragment.EXTRA_BOOK_SEARCH_DETAIL_BOOK_PARAMETER_KEY, book)
+        return bundle
     }
 
     @FragmentScope
@@ -74,6 +87,7 @@ class BookSearchListModule {
         return BookSearchListReducer()
     }
 
+    @FlowPreview
     @FragmentScope
     @Provides
     fun provideMvi(middlewares: MutableList<Middleware<BookSearchListViewState, BookSearchListIntent>>, reducer: BookSearchListReducer): MVI<BookSearchListViewState, BookSearchListIntent> {
@@ -84,10 +98,11 @@ class BookSearchListModule {
         )
     }
 
+    @FlowPreview
     @FragmentScope
     @Provides
-    fun provideBookSearchListView(activity: MainActivity, mvi: MVI<BookSearchListViewState, BookSearchListIntent>): BookSearchListRenderer {
-        val renderer = BookSearchListRenderer(BookSearchListViewBinding.inflate(LayoutInflater.from(activity)), mvi)
+    fun provideBookSearchListView(fragment: BookSearchListFragment, mvi: MVI<BookSearchListViewState, BookSearchListIntent>, bookChangedEventChannel: Channel<BookChangedEvent>): BookSearchListRenderer {
+        val renderer = BookSearchListRenderer(BookSearchListViewBinding.inflate(LayoutInflater.from(fragment.context)), mvi, bookChangedEventChannel)
         mvi.renderable = renderer
         return renderer
     }

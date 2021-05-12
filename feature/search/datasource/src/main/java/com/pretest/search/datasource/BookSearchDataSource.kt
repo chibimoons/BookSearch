@@ -32,6 +32,7 @@ class BookSearchDataSource(
                     imageUrl = document.thumbnail,
                     price = document.price,
                     publishDate = document.datetime,
+                    publisher = document.publisher,
                     authors = document.authors.map { authorName -> Author(authorName) }.toList()
                 )
             }?.toList()

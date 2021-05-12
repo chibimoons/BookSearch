@@ -1,9 +1,7 @@
 package com.pretest.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.pretest.mvi.MVI
 import com.pretest.search.presentation.detail.intent.BookSearchDetailIntent
 import com.pretest.search.presentation.detail.viewstate.BookSearchDetailViewState
@@ -13,11 +11,19 @@ import javax.inject.Inject
 
 class BookSearchDetailFragment: DaggerFragment() {
 
+    companion object {
+        val EXTRA_BOOK_SEARCH_DETAIL_BOOK_PARAMETER_KEY: String = "extra_book_search_detail_book_parameter_key"
+    }
+
     @Inject
     lateinit var mvi: MVI<BookSearchDetailViewState, BookSearchDetailIntent>
 
     @Inject
     lateinit var renderer: BookSearchDetailRenderer
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return renderer.getView()

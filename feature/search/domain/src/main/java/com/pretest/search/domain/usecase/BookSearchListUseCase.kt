@@ -28,6 +28,15 @@ class BookSearchListUseCase(
         return listOf()
     }
 
+    fun changedBook(changedBook: Book) {
+        books = books.map {
+            if (it.id.equals(changedBook.id)) {
+                changedBook
+            }
+            it
+        }
+    }
+
     suspend fun goDetailPage(book: Book) {
         bookSearchListRouter.goBookSearchDetail(book)
     }

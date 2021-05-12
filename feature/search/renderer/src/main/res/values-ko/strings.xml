@@ -2,4 +2,6 @@
     <string name="book_search_hint">책 이름을 입력하세요</string>
     <string name="error_message">오류가 발생했습니다!</string>
     <string name="book_price_format">%1s원</string>
+
+    <string name="favorite">즐겨찾기</string>
 </resources>

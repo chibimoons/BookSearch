@@ -19,6 +19,7 @@ class MVI<VIEW_STATE, INTENT>(
     var renderable: Renderable<VIEW_STATE>? = null
 
     fun start() {
+        renderable?.render(initialViewState)
         launchRedux(initialViewState)
     }
 
@@ -28,6 +29,7 @@ class MVI<VIEW_STATE, INTENT>(
             intentChannel.receiveAsFlow()
                 .flatMapConcat { applyMiddleware(0, currentViewState, it) }
                 .flowOn(Dispatchers.Main)
+                .catch { it.printStackTrace() }
                 .map { reducer.reduce(currentViewState, it) }
                 .onEach {
                     currentViewState = it
@@ -47,6 +49,9 @@ class MVI<VIEW_STATE, INTENT>(
     }
 
     private fun notify(viewState: VIEW_STATE) {
+        if (viewStateChannel.isClosedForSend) {
+            return
+        }
         CoroutineScope(Dispatchers.Main).launch {
             viewStateChannel.send(viewState)
         }

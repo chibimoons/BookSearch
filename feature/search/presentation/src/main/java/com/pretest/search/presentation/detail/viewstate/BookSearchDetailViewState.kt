@@ -4,14 +4,14 @@ import com.pretest.search.domain.entity.Book
 
 enum class BookSearchDetailViewStateType {
     INITIAL,
-    LIKE,
-    UNLIKE,
+    LIKED,
+    UNLIKED,
     ERROR,
     UNKNOWN
 }
 
 data class BookSearchDetailViewState(
     val stateType: BookSearchDetailViewStateType = BookSearchDetailViewStateType.INITIAL,
-    val book: Book? = null,
+    val book: Book,
     val throwable: Throwable? = null
 )

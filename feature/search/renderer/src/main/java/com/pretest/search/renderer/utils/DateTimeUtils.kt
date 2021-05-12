@@ -10,10 +10,15 @@ class DateTimeUtils {
         const val DATETIME_PATTERN_A_TYPE = "yyyy.MM.dd"
 
         fun getFormattedDateString(dateString: String?): String {
-            val dateTimeFormatter: DateTimeFormatter = DateTimeFormat.forPattern(DATETIME_PATTERN)
-            val localDate = dateTimeFormatter.parseLocalDate(dateString)
+            return try {
+                val dateTimeFormatter: DateTimeFormatter = DateTimeFormat.forPattern(DATETIME_PATTERN)
+                val localDate = dateTimeFormatter.parseLocalDate(dateString)
 
-            return localDate.toString(DATETIME_PATTERN_A_TYPE)
+                localDate.toString(DATETIME_PATTERN_A_TYPE)
+            } catch (e: Exception) {
+                ""
+            }
+
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.pretest.search.renderer.list
 
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.pretest.search.domain.entity.Book
 import com.pretest.search.presentation.list.intent.BookSearchListIntent
@@ -8,7 +10,7 @@ import com.pretest.search.renderer.R
 import com.pretest.search.renderer.base.BaseRecyclerViewHolder
 import com.pretest.search.renderer.databinding.BookSearchListItemViewBinding
 import com.pretest.search.renderer.utils.DateTimeUtils
-import java.text.DecimalFormat
+import com.pretest.search.renderer.utils.PriceUtils
 
 class BookItemViewHolder(
     binding: BookSearchListItemViewBinding,
@@ -16,7 +18,6 @@ class BookItemViewHolder(
 ): BaseRecyclerViewHolder<BookSearchListItemViewBinding, Book, BookSearchListIntent>(binding, eventListener) {
 
     private lateinit var book: Book
-    private val priceFormatter: DecimalFormat = DecimalFormat("###,###")
 
     override fun initViews() {
         viewBinding.root.setOnClickListener { eventListener(ClickBook(book)) }
@@ -29,6 +30,7 @@ class BookItemViewHolder(
         updatePublishDate()
         updateDescription()
         updatePrice()
+        updateFavorite()
     }
 
     private fun updateThumbnail() {
@@ -46,10 +48,24 @@ class BookItemViewHolder(
     }
 
     private fun updatePrice() {
-        viewBinding.price.text = getContext().getString(R.string.book_price_format, priceFormatter.format(book.price))
+        viewBinding.price.text = PriceUtils.getPrice(getContext(), book.price)
     }
 
     private fun updatePublishDate() {
         viewBinding.publishDate.text = DateTimeUtils.getFormattedDateString(book.publishDate)
+    }
+
+    private fun updateFavorite() {
+        getFavoriteIcon()?.let {
+            viewBinding.favorite.setImageDrawable(it)
+        }
+    }
+
+    private fun getFavoriteIcon(): Drawable? {
+        return if (book.like) {
+            ContextCompat.getDrawable(getContext(), R.drawable.ico_star_on)
+        } else {
+            ContextCompat.getDrawable(getContext(), R.drawable.ico_star_off)
+        }
     }
 }
